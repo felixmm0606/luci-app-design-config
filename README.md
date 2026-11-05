@@ -1,55 +1,70 @@
 # luci-app-design-config
 
-[![Release](https://img.shields.io/github/release/gngpp/luci-app-design-config.svg?style=flat)](https://github.com/gngpp/luci-app-design-config/releases)
-[![Downloads](https://img.shields.io/github/downloads/gngpp/luci-app-design-config/total?style=flat)](https://github.com/gngpp/luci-app-design-config/releases)
+[![Release](https://img.shields.io/github/release/felixmm0606/luci-app-design-config.svg?style=flat)](https://github.com/felixmm0606/luci-app-design-config/releases)
+[![Downloads](https://img.shields.io/github/downloads/felixmm0606/luci-app-design-config/total?style=flat)](https://github.com/felixmm0606/luci-app-design-config/releases)
 
-Design Theme Config Plugin.
+Design 主题配置插件。
 
-## Features
+> [!IMPORTANT]
+> 本仓库 `ucode` 分支为主要开发分支，已从 Lua CBI 迁移为纯 LuCI JS 视图，**不再依赖 `luci-compat` 和 `luci-lua-runtime`**。`master` 分支保留旧版 Lua 实现仅供参考。
 
-- Support changing theme dark/light mode.
-- Support showing/hiding the navbar.
-- Support replacing commonly used proxy icons.
+## 功能
 
-## Layout
+- 支持更改主题深色/浅色模式。
+- 支持显示/隐藏导航栏。
+- 支持更换常用的代理图标。
+
+## 分支说明
+
+| 分支 | 视图技术 | 运行时依赖 | 说明 |
+| --- | --- | --- | --- |
+| `ucode` (推荐) | LuCI JS (`form.Map`) | `luci-base` | 适用于 OpenWrt 23.05+ / LuCI master |
+| `master` | Lua CBI (`SimpleForm`) | `luci-compat` + `luci-lua-runtime` | 旧版，适用于 LEDE / 早期 OpenWrt |
+
+## 文件布局
 
 ```text
-htdocs/luci-static/resources/view/design-config.js      LuCI JS view (form.Map)
-root/usr/share/luci/menu.d/luci-app-design-config.json  menu entry (admin/system/design-config)
-root/etc/config/design                                  UCI defaults (`config global`)
-root/usr/share/rpcd/acl.d/luci-app-design-config.json   UCI ACL for the `design` package
+htdocs/luci-static/resources/view/design-config.js      LuCI JS 视图 (form.Map)
+root/usr/share/luci/menu.d/luci-app-design-config.json  菜单入口 (admin/system/design-config)
+root/etc/config/design                                  UCI 默认配置 (`config global`)
+root/usr/share/rpcd/acl.d/luci-app-design-config.json   UCI ACL (`design` 包)
 ```
 
-The page is a plain LuCI JS view: no Lua templates, no `luci-compat`, and no `luci-lua-runtime` dependency.
+页面使用纯 LuCI JS 视图实现：无 Lua 模板、无 `luci-compat`、无 `luci-lua-runtime` 依赖。
 
-It lives at **System → Design Config**:
+位于 **系统 → Design Config**：
 
 ```text
 /cgi-bin/luci/admin/system/design-config
 ```
 
-The UCI options it edits are exactly the ones read by `luci-theme-design`'s ucode templates.
+编辑的 UCI 选项与 `luci-theme-design` 的 ucode 模板读取的完全一致。
 
-## UCI options
+## UCI 选项
 
-| Option | Values | Theme behaviour |
+| 选项 | 可选值 | 主题行为 |
 | --- | --- | --- |
-| `design.global.mode` | `normal` / `light` / `dark` | `normal` follows `prefers-color-scheme`; otherwise sets `data-theme=<value>` |
-| `design.global.navbar` | `display` / `close` | Anything other than `display` hides the bottom navbar (`--vssrBottom: 0px`) |
-| `design.global.navbar_proxy` | `openclash` / `homeproxy` / `shadowsocksr` / `vssr` / `passwall` / `passwall2` | Link target of the proxy icon; only `openclash` has its own icon, all other values use `images/ssr.png` |
+| `design.global.mode` | `normal` / `light` / `dark` | `normal` 跟随 `prefers-color-scheme`；否则设置 `data-theme=<value>` |
+| `design.global.navbar` | `display` / `close` | 非 `display` 时隐藏底部导航栏 (`--vssrBottom: 0px`) |
+| `design.global.navbar_proxy` | `openclash` / `homeproxy` / `shadowsocksr` / `vssr` / `passwall` / `passwall2` | 代理图标的链接目标；仅 `openclash` 有独立图标，其余使用 `images/ssr.png` |
 
-## Menu visibility
+## 菜单可见性
 
-The menu entry only appears when the Design theme is installed:
+菜单仅在 Design 主题安装后显示，依赖文件检测：
 
 ```text
 /www/luci-static/design/css/style.css
 ```
 
-## Compile
+## 编译
 
 ```bash
-git clone https://github.com/gngpp/luci-app-design-config.git package/luci-app-design-config
+# 使用 ucode 分支
+git clone -b ucode https://github.com/felixmm0606/luci-app-design-config.git package/luci-app-design-config
 make menuconfig # 选择 LUCI -> Applications -> luci-app-design-config
 make V=s
 ```
+
+## 致谢
+
+- 上游仓库：[0x676e67/luci-app-design-config](https://github.com/0x676e67/luci-app-design-config)
