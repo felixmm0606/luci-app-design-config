@@ -18,8 +18,8 @@ Design 主题配置插件。
 
 | 分支 | 视图技术 | 运行时依赖 | 说明 |
 | --- | --- | --- | --- |
-| `ucode` (推荐) | LuCI JS (`form.Map`) | `luci-base` | 适用于 OpenWrt 23.05+ / LuCI master |
-| `master` | Lua CBI (`SimpleForm`) | `luci-compat` + `luci-lua-runtime` | 旧版，适用于 LEDE / 早期 OpenWrt |
+| `ucode` (推荐) | LuCI JS (`form.Map`) | `luci-base` | 适用于官方 OpenWrt 23.05+、ImmortalWrt 及现代 LuCI master 架构 |
+| `master` | Lua CBI (`SimpleForm`) | `luci-compat` + `luci-lua-runtime` | 旧版，适用于早期基于 Lua 的 OpenWrt 18.06 / 旧版 LEDE 固件 |
 
 ## 文件布局
 
