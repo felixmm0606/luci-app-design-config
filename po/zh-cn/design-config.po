@@ -39,6 +39,3 @@ msgstr "导航栏代理"
 
 msgid "OpenClash by default"
 msgstr "默认 OpenClash"
-
-msgid "Save Changes"
-msgstr "保存更改"
